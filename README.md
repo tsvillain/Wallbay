@@ -1,5 +1,5 @@
 # Wallbay
-![](demo/wallbay.gif)
+<img src="demo/wallbay.gif" height=500>
 
 Wallpaper App developed in Flutter using Unsplash API
 
