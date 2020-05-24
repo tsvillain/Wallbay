@@ -16,7 +16,8 @@ class WallpaperBloc extends Bloc<WallpaperEvent, WallpaperState> {
     if (event is GetAllWallpaper) {
       yield WallpaperIsLoading();
       try {
-        var response = await http.get(Uri.encodeFull(dailyNew), headers: {
+        var response = await http
+            .get(Uri.encodeFull(editorChoiceEndPoint + perPageLimit), headers: {
           "Accept": "application/json",
           "Authorization": "$apiKey"
         });
@@ -26,6 +27,24 @@ class WallpaperBloc extends Bloc<WallpaperEvent, WallpaperState> {
           _wallpaper.add(Wallpaper.fromMap(data[i]));
         }
         yield WallpaperIsLoaded(_wallpaper);
+      } catch (_) {
+        yield WallpaperIsNotLoaded();
+      }
+    } else if (event is SearchWallpaper) {
+      yield WallpaperIsLoading();
+      try {
+        var response = await http.get(
+            Uri.encodeFull(searchEndPoint + event.string + perPageLimit),
+            headers: {
+              "Accept": "application/json",
+              "Authorization": "$apiKey"
+            });
+        var data = jsonDecode(response.body)["photos"];
+        List<Wallpaper> _wallpaper = List<Wallpaper>();
+        for (var i = 0; i < data.length; i++) {
+          _wallpaper.add(Wallpaper.fromMap(data[i]));
+        }
+        yield SearchWallpaperIsLoaded(_wallpaper);
       } catch (_) {
         yield WallpaperIsNotLoaded();
       }
