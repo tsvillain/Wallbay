@@ -7,10 +7,9 @@ import 'package:http/http.dart' as http;
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:wallbay/Screens/Detail.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:wallbay/const.dart';
 
 class DailyNew extends StatefulWidget {
-  final String api;
-  DailyNew(this.api);
   @override
   _DailyNewState createState() => _DailyNewState();
 }
@@ -33,13 +32,14 @@ class _DailyNewState extends State<DailyNew>
   Future _getWallbay() async {
     DataConnectionStatus status = await checkNetwork();
     if (status == DataConnectionStatus.connected) {
-      var response = await http.get(Uri.encodeFull(widget.api),
-          headers: {"Accept": "application/json"});
-      List data = jsonDecode(response.body);
+      var response = await http.get(Uri.encodeFull(dailyNew),
+          headers: {"Accept": "application/json", "Authorization": "$apiKey"});
+      var data = jsonDecode(response.body);
       setState(() {
-        wall = data;
+        wall = data['photos'];
         isLoading = false;
       });
+      //print(wall);
     } else {
       showDialog(
         context: context,
@@ -84,26 +84,26 @@ class _DailyNewState extends State<DailyNew>
                   return Container(
                     child: GestureDetector(
                       onTap: () {
-                        count++;
-                        print(count);
-                        if (count == 5) {
-                          count = 0;
-                        }
-                        Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                                builder: (context) => Detail(
-                                      wall[index]['user']['name'],
-                                      wall[index]['user']['profile_image']
-                                          ['large'],
-                                      'Unsplash',
-                                      wall[index]['urls']['regular'],
-                                      wall[index]['user']['portfolio_url'],
-                                      wall[index]['user']['bio'],
-                                      wall[index]['user']['location'],
-                                      wall[index]['user']['links']['html'],
-                                      wall[index]['urls']['raw'],
-                                    )));
+                        // count++;
+                        // print(count);
+                        // if (count == 5) {
+                        //   count = 0;
+                        // }
+                        // Navigator.push(
+                        //     context,
+                        //     CupertinoPageRoute(
+                        //         builder: (context) => Detail(
+                        //               wall[index]['user']['name'],
+                        //               wall[index]['user']['profile_image']
+                        //                   ['large'],
+                        //               'Unsplash',
+                        //               wall[index]['urls']['regular'],
+                        //               wall[index]['user']['portfolio_url'],
+                        //               wall[index]['user']['bio'],
+                        //               wall[index]['user']['location'],
+                        //               wall[index]['user']['links']['html'],
+                        //               wall[index]['urls']['raw'],
+                        //             )));
                       },
                       child: Card(
                         semanticContainer: true,
@@ -116,7 +116,7 @@ class _DailyNewState extends State<DailyNew>
                                 0)
                             .withOpacity(1.0),
                         child: Image(
-                          image: NetworkImage(wall[index]['urls']['small']),
+                          image: NetworkImage(wall[index]['src']['portrait']),
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -61,8 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: DoubleBackToCloseApp(
           child: TabBarView(
             children: <Widget>[
-              DailyNew(
-                  "https://api.unsplash.com/photos/random?client_id=2eeaf188bc7eb96754597cdc8094efe5f8ee3f5e58cfe9d2ff4fcb5df176347b&count=50&query=wallpaper"),
+              DailyNew(),
               Trending(
                   "https://api.unsplash.com/search/photos/?client_id=2eeaf188bc7eb96754597cdc8094efe5f8ee3f5e58cfe9d2ff4fcb5df176347b&per_page=50&query=wallpapers"),
             ],
