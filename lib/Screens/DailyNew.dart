@@ -5,7 +5,6 @@ import 'dart:math' as math;
 import 'package:wallbay/Bloc/wallpaperBloc.dart';
 import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:wallbay/Screens/Detail.dart';
 
 class EditorChoice extends StatefulWidget {
@@ -16,6 +15,7 @@ class EditorChoice extends StatefulWidget {
 class _EditorChoiceState extends State<EditorChoice>
     with AutomaticKeepAliveClientMixin {
   WallpaperBloc _wallpaperBloc;
+
   @override
   Widget build(BuildContext context) {
     _wallpaperBloc = BlocProvider.of<WallpaperBloc>(context);
@@ -28,10 +28,7 @@ class _EditorChoiceState extends State<EditorChoice>
       builder: (BuildContext context, state) {
         if (state is WallpaperIsLoading) {
           return Center(
-            child: SpinKitFadingCube(
-              color: Theme.of(context).accentColor,
-              size: 50.0,
-            ),
+            child: CircularProgressIndicator(),
           );
         } else if (state is WallpaperIsLoaded) {
           return GridView.builder(
@@ -79,7 +76,7 @@ class _EditorChoiceState extends State<EditorChoice>
           );
         } else {
           return Center(
-            child: Text("Something went wrong."),
+            child: CircularProgressIndicator(),
           );
         }
       },
@@ -88,4 +85,9 @@ class _EditorChoiceState extends State<EditorChoice>
 
   @override
   bool get wantKeepAlive => true;
+  @override
+  void dispose() {
+    super.dispose();
+    _wallpaperBloc.close();
+  }
 }

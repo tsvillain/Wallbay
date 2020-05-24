@@ -36,7 +36,6 @@ dependencies:
   flutter_custom_tabs: ^0.6.0
   easy_permission_validator: ^1.0.6
   floating_search_bar: ^0.2.0
-  flutter_spinkit: "^4.1.0"
   flutter_bloc: ^4.0.0
   equatable: ^1.1.1
 
