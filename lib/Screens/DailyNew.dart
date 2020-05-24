@@ -1,130 +1,88 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:math' as math;
-import 'package:http/http.dart' as http;
-import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:wallbay/Screens/Detail.dart';
+import 'package:wallbay/Bloc/wallpaperBloc.dart';
+import 'package:wallbay/Bloc/wallpaperEvent.dart';
+import 'package:wallbay/Bloc/wallpaperState.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:wallbay/const.dart';
+import 'package:wallbay/Screens/Detail.dart';
 
-class DailyNew extends StatefulWidget {
+class EditorChoice extends StatefulWidget {
   @override
-  _DailyNewState createState() => _DailyNewState();
+  _EditorChoiceState createState() => _EditorChoiceState();
 }
 
-class _DailyNewState extends State<DailyNew>
+class _EditorChoiceState extends State<EditorChoice>
     with AutomaticKeepAliveClientMixin {
-  int count = 0;
-  List wall;
-  bool isLoading = true;
-  @override
-  void initState() {
-    super.initState();
-    _getWallbay();
-  }
-
-  checkNetwork() async {
-    return await DataConnectionChecker().connectionStatus;
-  }
-
-  Future _getWallbay() async {
-    DataConnectionStatus status = await checkNetwork();
-    if (status == DataConnectionStatus.connected) {
-      var response = await http.get(Uri.encodeFull(dailyNew),
-          headers: {"Accept": "application/json", "Authorization": "$apiKey"});
-      var data = jsonDecode(response.body);
-      setState(() {
-        wall = data['photos'];
-        isLoading = false;
-      });
-      //print(wall);
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text("No Internet"),
-          content: Text("Check your network connection"),
-          actions: <Widget>[
-            FlatButton(
-              child: Text("Close"),
-              onPressed: () => exit(0),
-            ),
-          ],
-        ),
-        barrierDismissible: false,
-      );
-    }
-  }
-
+  WallpaperBloc _wallpaperBloc;
   @override
   Widget build(BuildContext context) {
+    _wallpaperBloc = BlocProvider.of<WallpaperBloc>(context);
+    _wallpaperBloc.add(GetAllWallpaper());
     super.build(context);
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight) / 2;
     final double itemWidth = (size.width / 2);
-    return Container(
-      child: Center(
-        child: isLoading
-            ? SpinKitFadingCube(
-                color: Theme.of(context).accentColor,
-                size: 50.0,
-              )
-            : GridView.builder(
-                padding: EdgeInsets.all(5),
-                itemCount: wall.length == null ? 0 : wall.length,
-                scrollDirection: Axis.vertical,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 5,
-                    crossAxisSpacing: 5,
-                    childAspectRatio: (itemWidth / itemHeight)),
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    child: GestureDetector(
-                      onTap: () {
-                        // count++;
-                        // print(count);
-                        // if (count == 5) {
-                        //   count = 0;
-                        // }
-                        // Navigator.push(
-                        //     context,
-                        //     CupertinoPageRoute(
-                        //         builder: (context) => Detail(
-                        //               wall[index]['user']['name'],
-                        //               wall[index]['user']['profile_image']
-                        //                   ['large'],
-                        //               'Unsplash',
-                        //               wall[index]['urls']['regular'],
-                        //               wall[index]['user']['portfolio_url'],
-                        //               wall[index]['user']['bio'],
-                        //               wall[index]['user']['location'],
-                        //               wall[index]['user']['links']['html'],
-                        //               wall[index]['urls']['raw'],
-                        //             )));
-                      },
-                      child: Card(
-                        semanticContainer: true,
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        color: Color((math.Random().nextDouble() * 0xFFFFFF)
-                                    .toInt() <<
-                                0)
-                            .withOpacity(1.0),
-                        child: Image(
-                          image: NetworkImage(wall[index]['src']['portrait']),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
+    return BlocBuilder<WallpaperBloc, WallpaperState>(
+      builder: (BuildContext context, state) {
+        if (state is WallpaperIsLoading) {
+          return Center(
+            child: SpinKitFadingCube(
+              color: Theme.of(context).accentColor,
+              size: 50.0,
+            ),
+          );
+        } else if (state is WallpaperIsLoaded) {
+          return GridView.builder(
+            padding: EdgeInsets.all(5),
+            itemCount: state.getWallpaper.length,
+            scrollDirection: Axis.vertical,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+                childAspectRatio: (itemWidth / itemHeight)),
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (context) => Detail(
+                                  wallpaper: state.getWallpaper[index],
+                                )));
+                  },
+                  child: Card(
+                    semanticContainer: true,
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                  );
-                },
-              ),
-      ),
+                    color: Color(
+                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
+                                0)
+                        .withOpacity(1.0),
+                    child: Image(
+                      image: NetworkImage(state.getWallpaper[index].portrait),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        } else if (state is WallpaperIsNotLoaded) {
+          return Center(
+            child: Text("Error Loading Wallpapers."),
+          );
+        } else {
+          return Center(
+            child: Text("Something went wrong."),
+          );
+        }
+      },
     );
   }
 

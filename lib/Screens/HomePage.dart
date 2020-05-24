@@ -50,10 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
           bottom: TabBar(
             tabs: <Widget>[
               Tab(
-                child: Text("Daily New"),
+                child: Text("Editor's Choice"),
               ),
               Tab(
-                child: Text("Trending"),
+                child: Text("Cateogry"),
               ),
             ],
           ),
@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         body: DoubleBackToCloseApp(
           child: TabBarView(
             children: <Widget>[
-              DailyNew(),
+              EditorChoice(),
               Trending(
                   "https://api.unsplash.com/search/photos/?client_id=2eeaf188bc7eb96754597cdc8094efe5f8ee3f5e58cfe9d2ff4fcb5df176347b&per_page=50&query=wallpapers"),
             ],

@@ -94,23 +94,23 @@ class _SearchState extends State<Search> {
                         return Container(
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  CupertinoPageRoute(
-                                      builder: (context) => Detail(
-                                            wall[index]['user']['name'],
-                                            wall[index]['user']['profile_image']
-                                                ['large'],
-                                            'Unsplash',
-                                            wall[index]['urls']['regular'],
-                                            wall[index]['user']
-                                                ['portfolio_url'],
-                                            wall[index]['user']['bio'],
-                                            wall[index]['user']['location'],
-                                            wall[index]['user']['links']
-                                                ['html'],
-                                            wall[index]['urls']['raw'],
-                                          )));
+                              // Navigator.push(
+                              //     context,
+                              //     CupertinoPageRoute(
+                              //         builder: (context) => Detail(
+                              //               wall[index]['user']['name'],
+                              //               wall[index]['user']['profile_image']
+                              //                   ['large'],
+                              //               'Unsplash',
+                              //               wall[index]['urls']['regular'],
+                              //               wall[index]['user']
+                              //                   ['portfolio_url'],
+                              //               wall[index]['user']['bio'],
+                              //               wall[index]['user']['location'],
+                              //               wall[index]['user']['links']
+                              //                   ['html'],
+                              //               wall[index]['urls']['raw'],
+                              //             )));
                             },
                             child: Card(
                               semanticContainer: true,
