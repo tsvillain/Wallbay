@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Trending extends StatefulWidget {
-  final String api;
-  Trending(this.api);
+class Category extends StatefulWidget {
   @override
-  _TrendingState createState() => _TrendingState();
+  _CategoryState createState() => _CategoryState();
 }
 
-class _TrendingState extends State<Trending>
+class _CategoryState extends State<Category>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,6 @@ import 'package:easy_permission_validator/easy_permission_validator.dart';
 
 class Detail extends StatefulWidget {
   final Wallpaper wallpaper;
-
   Detail({@required this.wallpaper});
 
   @override
@@ -77,35 +76,27 @@ class _DetailState extends State<Detail> {
             ),
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Card(
-            margin: EdgeInsets.all(20),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.transparent,
-                backgroundImage: NetworkImage(
-                    "https://randomuser.me/api/portraits/lego/1.jpg"),
-              ),
-              title: Text(widget.wallpaper.photographerName),
-              subtitle: GestureDetector(
-                  onTap: () {
-                    _launchURL(context, widget.wallpaper.photographerUrl);
-                  },
-                  child: Text("by Pexels")),
-              trailing: downloadImage
-                  ? CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      child: Text(
-                        downPer,
-                        style: TextStyle(color: Colors.white),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: downloadImage
+                ? CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 30,
+                    child: Text(
+                      downPer,
+                      style: TextStyle(
+                        color: Colors.black,
                       ),
-                    )
-                  : IconButton(
+                    ),
+                  )
+                : CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: 30,
+                    child: IconButton(
                       splashColor: Colors.black45,
-                      icon: Icon(Icons.wallpaper),
+                      icon: Icon(Icons.format_paint),
                       onPressed: () {
                         if (permission == false) {
                           print("Requesting Permission");
@@ -116,7 +107,46 @@ class _DetailState extends State<Detail> {
                         }
                       },
                     ),
-            ),
+                  ),
+            // child: Card(
+            //   margin: EdgeInsets.all(20),
+            //   shape: RoundedRectangleBorder(
+            //       borderRadius: BorderRadius.circular(10.0)),
+            //   child: ListTile(
+            //     leading: CircleAvatar(
+            //       backgroundColor: Colors.transparent,
+            //       backgroundImage: NetworkImage(
+            //           "https://randomuser.me/api/portraits/lego/1.jpg"),
+            //     ),
+            //     title: Text(widget.wallpaper.photographerName),
+            //     subtitle: GestureDetector(
+            //         onTap: () {
+            //           _launchURL(context, widget.wallpaper.photographerUrl);
+            //         },
+            //         child: Text("by Pexels")),
+            //     trailing: downloadImage
+            //         ? CircleAvatar(
+            //             backgroundColor: Colors.transparent,
+            //             child: Text(
+            //               downPer,
+            //               style: TextStyle(color: Colors.white),
+            //             ),
+            //           )
+            //         : IconButton(
+            //             splashColor: Colors.black45,
+            //             icon: Icon(Icons.wallpaper),
+            //             onPressed: () {
+            //               if (permission == false) {
+            //                 print("Requesting Permission");
+            //                 _permissionRequest();
+            //               } else {
+            //                 print("Permission Granted.");
+            //                 setWallpaper();
+            //               }
+            //             },
+            //           ),
+            //   ),
+            // ),
           ),
         ),
       ]),

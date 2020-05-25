@@ -22,6 +22,8 @@ class _SearchState extends State<Search> {
     _wallpaperBloc = BlocProvider.of<SearchWallpaperBloc>(context);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
         title: TextField(
           autofocus: true,
           focusNode: _focusNode,
@@ -35,14 +37,17 @@ class _SearchState extends State<Search> {
           },
         ),
         actions: <Widget>[
-          IconButton(
-            alignment: Alignment.centerRight,
-            onPressed: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-              _wallpaperBloc
-                  .add(SearchWallpaper(string: searchController.text));
-            },
-            icon: Icon(Icons.search),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: IconButton(
+              alignment: Alignment.centerRight,
+              onPressed: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+                _wallpaperBloc
+                    .add(SearchWallpaper(string: searchController.text));
+              },
+              icon: Icon(Icons.search),
+            ),
           ),
         ],
       ),

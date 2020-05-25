@@ -40,6 +40,10 @@ class MyApp extends StatelessWidget {
               cursorColor: Colors.white,
               primaryColor: Colors.black,
               dialogBackgroundColor: Colors.black,
+              bottomNavigationBarTheme: BottomNavigationBarThemeData(
+                  backgroundColor: Colors.black,
+                  selectedItemColor: Colors.black,
+                  unselectedItemColor: Colors.white),
               cardColor: Colors.white38),
           home: SplashScreen(
             seconds: 3,
