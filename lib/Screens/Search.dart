@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wallbay/Bloc/searchWallpaperBloc.dart';
 import 'dart:math' as math;
-import 'package:wallbay/Bloc/wallpaperBloc.dart';
 import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
 import 'package:wallbay/Screens/Detail.dart';
@@ -11,16 +11,15 @@ class Search extends StatefulWidget {
   @override
   _SearchState createState() => _SearchState();
 }
-//bug in search
 
 class _SearchState extends State<Search> {
-  WallpaperBloc _wallpaperBloc;
+  SearchWallpaperBloc _wallpaperBloc;
   TextEditingController searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   Icon actionIcon = Icon(Icons.search);
   @override
   Widget build(BuildContext context) {
-    _wallpaperBloc = BlocProvider.of<WallpaperBloc>(context);
+    _wallpaperBloc = BlocProvider.of<SearchWallpaperBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: TextField(
@@ -55,13 +54,13 @@ class _SearchState extends State<Search> {
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight) / 2;
     final double itemWidth = (size.width / 2);
-    return BlocBuilder<WallpaperBloc, WallpaperState>(
+    return BlocBuilder<SearchWallpaperBloc, WallpaperState>(
       builder: (BuildContext context, WallpaperState state) {
-        if (state is WallpaperNotSearched) {
+        if (state is SearchWallpaperNotSearched) {
           return Center(
             child: Text("Search Wallpaper"),
           );
-        } else if (state is WallpaperIsLoading) {
+        } else if (state is SearchWallpaperIsLoading) {
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -106,7 +105,7 @@ class _SearchState extends State<Search> {
               );
             },
           );
-        } else if (state is WallpaperIsNotLoaded) {
+        } else if (state is SearchWallpaperIsNotLoaded) {
           return Center(
             child: Text("Error Loading Wallpapers."),
           );
