@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:wallbay/Screens/Category.dart' as categoryScreen;
 import 'package:wallbay/Screens/EditorChoice.dart';
@@ -33,20 +32,18 @@ class _MyHomePageState extends State<MyHomePage> {
       iconSize: 24,
       padding: padding,
       icon: Icons.verified_user,
-      // textStyle: t.textStyle,
       text: "Editor's Choice",
     ));
 
     tabs.add(GButton(
       gap: gap,
-      iconActiveColor: Colors.pink,
+      iconActiveColor: Colors.teal,
       iconColor: Colors.black,
-      textColor: Colors.pink,
-      backgroundColor: Colors.pink.withOpacity(.2),
+      textColor: Colors.teal,
+      backgroundColor: Colors.teal.withOpacity(.2),
       iconSize: 24,
       padding: padding,
       icon: Icons.category,
-      // textStyle: t.textStyle,
       text: 'Category',
     ));
   }
@@ -119,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: FloatingActionButton(
+                backgroundColor: Colors.white,
                 child: Icon(Icons.search),
                 onPressed: () {
                   Navigator.push(context,
