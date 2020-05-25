@@ -83,9 +83,9 @@ class _EditorChoiceState extends State<EditorChoice>
 
   @override
   bool get wantKeepAlive => true;
-  @override
-  void dispose() {
-    super.dispose();
-    _wallpaperBloc.close();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _wallpaperBloc.close();
+  // }
 }

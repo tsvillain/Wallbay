@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
-import 'package:wallbay/Screens/DailyNew.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:wallbay/Screens/Category.dart' as categoryScreen;
+import 'package:wallbay/Screens/EditorChoice.dart';
 import 'package:wallbay/Screens/Search.dart';
 import 'package:wallbay/Screens/Setting.dart';
-import 'package:wallbay/Screens/Trending.dart';
 
 class MyHomePage extends StatefulWidget {
   final String title;
@@ -14,63 +15,129 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _selectedIndex = 0;
+  PageController controller = PageController();
+  List<GButton> tabs = new List();
   @override
   void initState() {
     super.initState();
+    var padding = EdgeInsets.symmetric(horizontal: 18, vertical: 5);
+    double gap = 10;
+
+    tabs.add(GButton(
+      gap: gap,
+      iconActiveColor: Colors.purple,
+      iconColor: Colors.black,
+      textColor: Colors.purple,
+      backgroundColor: Colors.purple.withOpacity(.2),
+      iconSize: 24,
+      padding: padding,
+      icon: Icons.verified_user,
+      // textStyle: t.textStyle,
+      text: "Editor's Choice",
+    ));
+
+    tabs.add(GButton(
+      gap: gap,
+      iconActiveColor: Colors.pink,
+      iconColor: Colors.black,
+      textColor: Colors.pink,
+      backgroundColor: Colors.pink.withOpacity(.2),
+      iconSize: 24,
+      padding: padding,
+      icon: Icons.category,
+      // textStyle: t.textStyle,
+      text: 'Category',
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.search),
-          onPressed: () {
-            Navigator.push(
-                context, CupertinoPageRoute(builder: (context) => Search()));
-          },
-          elevation: 3.0,
+    return Scaffold(
+      extendBody: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: Text(
+          widget.title,
+          style: TextStyle(fontFamily: 'Raleway'),
         ),
-        appBar: AppBar(
-          title: Text(
-            widget.title,
-            style: TextStyle(fontFamily: 'Raleway'),
-          ),
-          centerTitle: true,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.info_outline),
-              onPressed: () {
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => Setting()));
-              },
-            )
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.info_outline),
+            onPressed: () {
+              Navigator.push(
+                  context, CupertinoPageRoute(builder: (context) => Setting()));
+            },
+          )
+        ],
+      ),
+      body: PageView.builder(
+        onPageChanged: (page) {
+          setState(() {
+            _selectedIndex = page;
+          });
+        },
+        controller: controller,
+        itemBuilder: (BuildContext context, int index) {
+          return getScreen(index);
+        },
+        itemCount: tabs.length,
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(100)),
+                  boxShadow: [
+                    BoxShadow(
+                        spreadRadius: -10,
+                        blurRadius: 60,
+                        color: Colors.black.withOpacity(.20),
+                        offset: Offset(0, 15))
+                  ]),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
+                child: GNav(
+                    tabs: tabs,
+                    selectedIndex: _selectedIndex,
+                    onTabChange: (index) {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                      controller.jumpToPage(index);
+                    }),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: FloatingActionButton(
+                child: Icon(Icons.search),
+                onPressed: () {
+                  Navigator.push(context,
+                      CupertinoPageRoute(builder: (context) => Search()));
+                },
+                elevation: 3.0,
+              ),
+            ),
           ],
-          bottom: TabBar(
-            tabs: <Widget>[
-              Tab(
-                child: Text("Editor's Choice"),
-              ),
-              Tab(
-                child: Text("Cateogry"),
-              ),
-            ],
-          ),
-        ),
-        body: DoubleBackToCloseApp(
-          child: TabBarView(
-            children: <Widget>[
-              EditorChoice(),
-              Trending(
-                  "https://api.unsplash.com/search/photos/?client_id=2eeaf188bc7eb96754597cdc8094efe5f8ee3f5e58cfe9d2ff4fcb5df176347b&per_page=50&query=wallpapers"),
-            ],
-          ),
-          snackBar: const SnackBar(
-            content: Text('Press Again To Leave'),
-          ),
         ),
       ),
     );
+  }
+}
+
+getScreen(int selectedIndex) {
+  if (selectedIndex == 0) {
+    return EditorChoice();
+  } else if (selectedIndex == 1) {
+    return categoryScreen.Category();
   }
 }

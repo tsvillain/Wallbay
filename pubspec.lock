@@ -92,13 +92,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.9"
-  double_back_to_close_app:
-    dependency: "direct main"
-    description:
-      name: double_back_to_close_app
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   easy_permission_validator:
     dependency: "direct main"
     description:
@@ -163,6 +156,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  google_nav_bar:
+    dependency: "direct main"
+    description:
+      name: google_nav_bar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.0"
   http:
     dependency: "direct main"
     description:
