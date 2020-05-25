@@ -30,21 +30,24 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
               brightness: Brightness.light,
               cardColor: Colors.white38,
-              accentColor: Colors.black,
+              accentColor: Colors.amberAccent,
               cursorColor: Colors.black,
               dialogBackgroundColor: Colors.white,
               primaryColor: Colors.white),
-          darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              accentColor: Colors.white,
-              cursorColor: Colors.white,
-              primaryColor: Colors.black,
-              dialogBackgroundColor: Colors.black,
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                  backgroundColor: Colors.black,
-                  selectedItemColor: Colors.black,
-                  unselectedItemColor: Colors.white),
-              cardColor: Colors.white38),
+          // theme: ThemeData(
+          //     brightness: Brightness.light,
+          //     cardColor: Colors.white38,
+          //     accentColor: Colors.black,
+          //     cursorColor: Colors.black,
+          //     dialogBackgroundColor: Colors.white,
+          //     primaryColor: Colors.white),
+          // darkTheme: ThemeData(
+          //     brightness: Brightness.dark,
+          //     accentColor: Colors.white,
+          //     cursorColor: Colors.white,
+          //     primaryColor: Colors.black,
+          //     dialogBackgroundColor: Colors.black,
+          //     cardColor: Colors.white38),
           home: SplashScreen(
             seconds: 3,
             navigateAfterSeconds: MyHomePage('Wallbay'),
