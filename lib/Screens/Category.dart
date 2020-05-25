@@ -5,7 +5,6 @@ import 'package:wallbay/Bloc/categoryWallpaperBloc.dart';
 import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
 import 'package:wallbay/Screens/Detail.dart';
-import 'dart:math' as math;
 
 class Category extends StatefulWidget {
   final String category;
@@ -68,14 +67,14 @@ class _CategoryState extends State<Category> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      color: Color(
-                              (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
-                                  0)
-                          .withOpacity(1.0),
-                      child: Image(
-                        image: NetworkImage(
-                            state.getCategoryWallpaper[index].portrait),
-                        fit: BoxFit.cover,
+                      child: Hero(
+                        tag: state.getCategoryWallpaper[index].portrait,
+                        child: FadeInImage.assetNetwork(
+                          image: state.getCategoryWallpaper[index].portrait,
+                          fit: BoxFit.cover,
+                          placeholder: "image/abstract.jpg",
+                          imageScale: 1,
+                        ),
                       ),
                     ),
                   ),

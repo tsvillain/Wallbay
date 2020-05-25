@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'dart:math' as math;
 import 'package:wallbay/Bloc/wallpaperBloc.dart';
 import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
@@ -46,7 +45,7 @@ class _EditorChoiceState extends State<EditorChoice>
                   onTap: () {
                     Navigator.push(
                         context,
-                        CupertinoPageRoute(
+                        MaterialPageRoute(
                             builder: (context) => Detail(
                                   wallpaper: state.getWallpaper[index],
                                 )));
@@ -57,13 +56,14 @@ class _EditorChoiceState extends State<EditorChoice>
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    color: Color(
-                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
-                                0)
-                        .withOpacity(1.0),
-                    child: Image(
-                      image: NetworkImage(state.getWallpaper[index].portrait),
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: state.getWallpaper[index].portrait,
+                      child: FadeInImage.assetNetwork(
+                        image: state.getWallpaper[index].portrait,
+                        fit: BoxFit.cover,
+                        placeholder: "image/abstract.jpg",
+                        imageScale: 1,
+                      ),
                     ),
                   ),
                 ),

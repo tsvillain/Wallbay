@@ -117,7 +117,10 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
               child: FloatingActionButton(
                 backgroundColor: Colors.white,
-                child: Icon(Icons.search),
+                child: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
                 onPressed: () {
                   Navigator.push(context,
                       CupertinoPageRoute(builder: (context) => Search()));

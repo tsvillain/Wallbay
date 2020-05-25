@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,32 +35,18 @@ class _DetailState extends State<Detail> {
     }
   }
 
-  void _launchURL(BuildContext context, url) async {
-    try {
-      await launch(
-        url,
-        option: CustomTabsOption(
-          enableDefaultShare: true,
-          enableUrlBarHiding: true,
-          showPageTitle: true,
-          animation: CustomTabsAnimation.slideIn(),
-        ),
-      );
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: <Widget>[
-        Container(
-          child: PhotoView(
-            imageProvider: NetworkImage(widget.wallpaper.portrait),
-            minScale: PhotoViewComputedScale.covered * 1.0,
-            maxScale: PhotoViewComputedScale.covered * 1.0,
-          ),
+        Hero(
+          tag: widget.wallpaper.portrait,
+          child: Container(
+              height: MediaQuery.of(context).size.height,
+              child: Image.network(
+                widget.wallpaper.portrait,
+                fit: BoxFit.cover,
+              )),
         ),
         Positioned(
           child: AppBar(
@@ -96,7 +80,10 @@ class _DetailState extends State<Detail> {
                     radius: 30,
                     child: IconButton(
                       splashColor: Colors.black45,
-                      icon: Icon(Icons.format_paint),
+                      icon: Icon(
+                        Icons.format_paint,
+                        color: Colors.black,
+                      ),
                       onPressed: () {
                         if (permission == false) {
                           print("Requesting Permission");
@@ -108,45 +95,6 @@ class _DetailState extends State<Detail> {
                       },
                     ),
                   ),
-            // child: Card(
-            //   margin: EdgeInsets.all(20),
-            //   shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(10.0)),
-            //   child: ListTile(
-            //     leading: CircleAvatar(
-            //       backgroundColor: Colors.transparent,
-            //       backgroundImage: NetworkImage(
-            //           "https://randomuser.me/api/portraits/lego/1.jpg"),
-            //     ),
-            //     title: Text(widget.wallpaper.photographerName),
-            //     subtitle: GestureDetector(
-            //         onTap: () {
-            //           _launchURL(context, widget.wallpaper.photographerUrl);
-            //         },
-            //         child: Text("by Pexels")),
-            //     trailing: downloadImage
-            //         ? CircleAvatar(
-            //             backgroundColor: Colors.transparent,
-            //             child: Text(
-            //               downPer,
-            //               style: TextStyle(color: Colors.white),
-            //             ),
-            //           )
-            //         : IconButton(
-            //             splashColor: Colors.black45,
-            //             icon: Icon(Icons.wallpaper),
-            //             onPressed: () {
-            //               if (permission == false) {
-            //                 print("Requesting Permission");
-            //                 _permissionRequest();
-            //               } else {
-            //                 print("Permission Granted.");
-            //                 setWallpaper();
-            //               }
-            //             },
-            //           ),
-            //   ),
-            // ),
           ),
         ),
       ]),

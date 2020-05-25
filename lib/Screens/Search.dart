@@ -96,14 +96,14 @@ class _SearchState extends State<Search> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    color: Color(
-                            (math.Random().nextDouble() * 0xFFFFFF).toInt() <<
-                                0)
-                        .withOpacity(1.0),
-                    child: Image(
-                      image: NetworkImage(
-                          state.getSearchWallpaper[index].portrait),
-                      fit: BoxFit.cover,
+                    child: Hero(
+                      tag: state.getSearchWallpaper[index].portrait,
+                      child: FadeInImage.assetNetwork(
+                        image: state.getSearchWallpaper[index].portrait,
+                        fit: BoxFit.cover,
+                        placeholder: "image/abstract.jpg",
+                        imageScale: 1,
+                      ),
                     ),
                   ),
                 ),
