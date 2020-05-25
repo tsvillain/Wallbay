@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:wallbay/Screens/Category.dart' as categoryScreen;
+import 'package:wallbay/Screens/CategoryList.dart' as categoryScreen;
 import 'package:wallbay/Screens/EditorChoice.dart';
 import 'package:wallbay/Screens/Search.dart';
 import 'package:wallbay/Screens/Setting.dart';
@@ -136,6 +136,6 @@ getScreen(int selectedIndex) {
   if (selectedIndex == 0) {
     return EditorChoice();
   } else if (selectedIndex == 1) {
-    return categoryScreen.Category();
+    return categoryScreen.CategoryList();
   }
 }
