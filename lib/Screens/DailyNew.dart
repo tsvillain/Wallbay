@@ -75,9 +75,7 @@ class _EditorChoiceState extends State<EditorChoice>
             child: Text("Error Loading Wallpapers."),
           );
         } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
+          return Text("WentWorng.");
         }
       },
     );

@@ -10,6 +10,7 @@ import 'package:wallbay/const.dart';
 class WallpaperBloc extends Bloc<WallpaperEvent, WallpaperState> {
   @override
   get initialState => WallpaperIsLoading();
+  List<Wallpaper> _wallpaper = List<Wallpaper>();
 
   @override
   Stream<WallpaperState> mapEventToState(WallpaperEvent event) async* {
@@ -22,29 +23,11 @@ class WallpaperBloc extends Bloc<WallpaperEvent, WallpaperState> {
           "Authorization": "$apiKey"
         });
         var data = jsonDecode(response.body)["photos"];
-        List<Wallpaper> _wallpaper = List<Wallpaper>();
+        _wallpaper = List<Wallpaper>();
         for (var i = 0; i < data.length; i++) {
           _wallpaper.add(Wallpaper.fromMap(data[i]));
         }
         yield WallpaperIsLoaded(_wallpaper);
-      } catch (_) {
-        yield WallpaperIsNotLoaded();
-      }
-    } else if (event is SearchWallpaper) {
-      yield WallpaperIsLoading();
-      try {
-        var response = await http.get(
-            Uri.encodeFull(searchEndPoint + event.string + perPageLimit),
-            headers: {
-              "Accept": "application/json",
-              "Authorization": "$apiKey"
-            });
-        var data = jsonDecode(response.body)["photos"];
-        List<Wallpaper> _wallpaper = List<Wallpaper>();
-        for (var i = 0; i < data.length; i++) {
-          _wallpaper.add(Wallpaper.fromMap(data[i]));
-        }
-        yield SearchWallpaperIsLoaded(_wallpaper);
       } catch (_) {
         yield WallpaperIsNotLoaded();
       }
