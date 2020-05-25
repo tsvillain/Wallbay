@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallbay/Bloc/categoryWallpaperBloc.dart';
 import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
+import 'package:wallbay/Model/wallpaper.dart';
 import 'package:wallbay/Screens/Detail.dart';
 
 class Category extends StatefulWidget {
@@ -15,6 +16,31 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   CategoryWallpaperBloc categoryWallpaperBloc;
+  int counter = 0;
+  void openPage(Wallpaper wallpaper) {
+    counter++;
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Detail(
+          wallpaper: wallpaper,
+        ),
+      ),
+    );
+  }
+
+  void showAd(Wallpaper wallpaper) {
+    print("inside");
+    counter = 0;
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Detail(
+          wallpaper: wallpaper,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +79,9 @@ class _CategoryState extends State<Category> {
                 return Container(
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (context) => Detail(
-                                    wallpaper:
-                                        state.getCategoryWallpaper[index],
-                                  )));
+                      counter == 2
+                          ? showAd(state.getCategoryWallpaper[index])
+                          : openPage(state.getCategoryWallpaper[index]);
                     },
                     child: Card(
                       semanticContainer: true,

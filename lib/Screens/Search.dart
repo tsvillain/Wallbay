@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallbay/Bloc/searchWallpaperBloc.dart';
-import 'dart:math' as math;
 import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
+import 'package:wallbay/Model/wallpaper.dart';
 import 'package:wallbay/Screens/Detail.dart';
 
 class Search extends StatefulWidget {
@@ -13,6 +13,7 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  int counter = 0;
   SearchWallpaperBloc _wallpaperBloc;
   TextEditingController searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
@@ -55,6 +56,31 @@ class _SearchState extends State<Search> {
     );
   }
 
+  void openPage(Wallpaper wallpaper) {
+    counter++;
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Detail(
+          wallpaper: wallpaper,
+        ),
+      ),
+    );
+  }
+
+  void showAd(Wallpaper wallpaper) {
+    //TODO add Ad
+    counter = 0;
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Detail(
+          wallpaper: wallpaper,
+        ),
+      ),
+    );
+  }
+
   Widget _data(BuildContext context) {
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight) / 2;
@@ -83,12 +109,9 @@ class _SearchState extends State<Search> {
               return Container(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (context) => Detail(
-                                  wallpaper: state.getSearchWallpaper[index],
-                                )));
+                    counter == 2
+                        ? showAd(state.getSearchWallpaper[index])
+                        : openPage(state.getSearchWallpaper[index]);
                   },
                   child: Card(
                     semanticContainer: true,

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallbay/Bloc/wallpaperBloc.dart';
 import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
+import 'package:wallbay/Model/wallpaper.dart';
 import 'package:wallbay/Screens/Detail.dart';
 
 class EditorChoice extends StatefulWidget {
@@ -14,6 +15,31 @@ class EditorChoice extends StatefulWidget {
 class _EditorChoiceState extends State<EditorChoice>
     with AutomaticKeepAliveClientMixin {
   WallpaperBloc _wallpaperBloc;
+  int counter = 0;
+  void openPage(Wallpaper wallpaper) {
+    counter++;
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Detail(
+          wallpaper: wallpaper,
+        ),
+      ),
+    );
+  }
+
+  void showAd(Wallpaper wallpaper) {
+    //TODO ad
+    counter = 0;
+    Navigator.push(
+      context,
+      CupertinoPageRoute(
+        builder: (context) => Detail(
+          wallpaper: wallpaper,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +69,9 @@ class _EditorChoiceState extends State<EditorChoice>
               return Container(
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Detail(
-                                  wallpaper: state.getWallpaper[index],
-                                )));
+                    counter == 2
+                        ? showAd(state.getWallpaper[index])
+                        : openPage(state.getWallpaper[index]);
                   },
                   child: Card(
                     semanticContainer: true,
@@ -83,9 +106,4 @@ class _EditorChoiceState extends State<EditorChoice>
 
   @override
   bool get wantKeepAlive => true;
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _wallpaperBloc.close();
-  // }
 }
