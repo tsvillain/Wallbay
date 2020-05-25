@@ -122,10 +122,4 @@ class _SearchState extends State<Search> {
       },
     );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _wallpaperBloc.close();
-  }
 }
