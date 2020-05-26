@@ -1,5 +1,5 @@
 name: wallbay
-description: A new Flutter project.
+description: Wallpaper Application.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -37,6 +37,7 @@ dependencies:
   flutter_bloc: ^4.0.0
   equatable: ^1.1.1
   google_nav_bar: ^2.2.0
+  # admob_flutter: ^0.3.4
 
 dev_dependencies:
   flutter_test:

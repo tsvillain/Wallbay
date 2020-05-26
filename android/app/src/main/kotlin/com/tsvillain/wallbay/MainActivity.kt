@@ -1,4 +1,4 @@
-package app.tsvillain.wallbay
+package com.tsvillain.wallbay
 
 import android.os.Bundle
 

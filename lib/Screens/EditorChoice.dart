@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
 import 'package:wallbay/Model/wallpaper.dart';
 import 'package:wallbay/Screens/Detail.dart';
+import 'package:wallbay/const.dart';
 
 class EditorChoice extends StatefulWidget {
   @override
@@ -28,8 +30,7 @@ class _EditorChoiceState extends State<EditorChoice>
     );
   }
 
-  void showAd(Wallpaper wallpaper) {
-    //TODO ad
+  Future<void> showAd(Wallpaper wallpaper) async {
     counter = 0;
     Navigator.push(
       context,
