@@ -1,4 +1,4 @@
-# Wallbay
+# Wallbay ![Build Status](https://travis-ci.com/tsvillain/Wallbay.svg?token=sEFaCoje12yw6XrMXPet&)
 <!-- <img src="demo/wallbay.gif" height=500> -->
 
 Wallpaper App developed in Flutter using Unsplash API
