@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wallbay/Bloc/wallpaperBloc.dart';
-import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
 import 'package:wallbay/Model/wallpaper.dart';
 import 'package:wallbay/Screens/Detail.dart';
@@ -14,7 +13,6 @@ class EditorChoice extends StatefulWidget {
 
 class _EditorChoiceState extends State<EditorChoice>
     with AutomaticKeepAliveClientMixin {
-  WallpaperBloc _wallpaperBloc;
   int counter = 0;
   void openPage(Wallpaper wallpaper) {
     counter++;
@@ -42,8 +40,6 @@ class _EditorChoiceState extends State<EditorChoice>
 
   @override
   Widget build(BuildContext context) {
-    _wallpaperBloc = BlocProvider.of<WallpaperBloc>(context);
-    _wallpaperBloc.add(GetAllWallpaper());
     super.build(context);
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight) / 2;

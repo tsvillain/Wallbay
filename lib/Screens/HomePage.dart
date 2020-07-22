@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:wallbay/Bloc/wallpaperBloc.dart';
+import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Screens/CategoryList.dart' as categoryScreen;
 import 'package:wallbay/Screens/EditorChoice.dart';
 import 'package:wallbay/Screens/Search.dart';
@@ -14,6 +17,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  WallpaperBloc _wallpaperBloc;
   int _selectedIndex = 0;
   PageController controller = PageController();
   List<GButton> tabs = new List();
@@ -50,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _wallpaperBloc = BlocProvider.of<WallpaperBloc>(context);
+    _wallpaperBloc.add(GetAllWallpaper());
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
