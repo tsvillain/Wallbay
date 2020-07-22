@@ -6,7 +6,6 @@ import 'package:wallbay/Bloc/wallpaperEvent.dart';
 import 'package:wallbay/Bloc/wallpaperState.dart';
 import 'package:wallbay/Model/wallpaper.dart';
 import 'package:wallbay/Screens/Detail.dart';
-import 'package:wallbay/const.dart';
 
 class EditorChoice extends StatefulWidget {
   @override

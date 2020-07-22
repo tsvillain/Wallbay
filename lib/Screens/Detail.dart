@@ -63,28 +63,30 @@ class _DetailState extends State<Detail> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Align(
-            alignment: Alignment.bottomCenter,
-            child: downloadImage
-                ? CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30,
-                    child: Text(
-                      downPer,
-                      style: TextStyle(
-                        color: Colors.black,
+              alignment: Alignment.bottomRight,
+              child: downloadImage
+                  ? Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.white60,
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                    ),
-                  )
-                : CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30,
-                    child: IconButton(
-                      splashColor: Colors.black45,
-                      icon: Icon(
-                        Icons.format_paint,
-                        color: Colors.black,
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Text(
+                          "Downloading.. $downPer",
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
-                      onPressed: () {
+                    )
+                  // GFButton(
+                  //     onPressed: () {},
+                  //     text: "Downloading... $downPer",
+                  //     shape: GFButtonShape.pills,
+                  //     color: Colors.white54,
+                  //   )
+                  : InkWell(
+                      onTap: () {
                         if (permission == false) {
                           print("Requesting Permission");
                           _permissionRequest();
@@ -93,9 +95,36 @@ class _DetailState extends State<Detail> {
                           setWallpaper();
                         }
                       },
-                    ),
-                  ),
-          ),
+                      child: Container(
+                        margin: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Colors.white60,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Text(
+                            "Set Wallpaper",
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                    )
+              // GFButton(
+              //     onPressed: () {
+              //       if (permission == false) {
+              //         print("Requesting Permission");
+              //         _permissionRequest();
+              //       } else {
+              //         print("Permission Granted.");
+              //         setWallpaper();
+              //       }
+              //     },
+              //     text: "Set Wallpaper",
+              //     shape: GFButtonShape.pills,
+              //     color: Colors.white54,
+              //   ),
+              ),
         ),
       ]),
     );
@@ -133,7 +162,7 @@ class _DetailState extends State<Detail> {
     String _localFile = path;
     try {
       Wallpaperplugin.setWallpaperWithCrop(localFile: _localFile);
-      wallpaperStatus = "new Wallpaper set";
+      wallpaperStatus = "Wallpaper set";
     } on PlatformException {
       print("Platform exception");
       wallpaperStatus = "Platform Error Occured";
