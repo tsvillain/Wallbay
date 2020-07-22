@@ -2,7 +2,7 @@
 
 Wallpaper App developed in Flutter using [Pexels API](https://www.pexels.com/api/)
 
-<img src="demo/wallbay.gif" height=300>
+<img src="demo/wallbay.gif">
 
 ## Packages Used in this Application:
   * data_connection_checker: ^0.3.4
