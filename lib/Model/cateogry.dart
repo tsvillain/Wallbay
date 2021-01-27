@@ -12,31 +12,31 @@ class Category {
 
 List<Category> categoryList = [
   Category(
-    image: AssetImage("image/abstract.jpg"),
+    image: AssetImage("assets/image/abstract.jpg"),
     name: "Abstract",
   ),
   Category(
-    image: AssetImage("image/car.jpg"),
+    image: AssetImage("assets/image/car.jpg"),
     name: "Cars",
   ),
   Category(
-    image: AssetImage("image/city.jpg"),
+    image: AssetImage("assets/image/city.jpg"),
     name: "City",
   ),
   Category(
-    image: AssetImage("image/minimalist.jpg"),
+    image: AssetImage("assets/image/minimalist.jpg"),
     name: "Minimalist",
   ),
   Category(
-    image: AssetImage("image/nature.jpg"),
+    image: AssetImage("assets/image/nature.jpg"),
     name: "Nature",
   ),
   Category(
-    image: AssetImage("image/space.jpg"),
+    image: AssetImage("assets/image/space.jpg"),
     name: "Space",
   ),
   Category(
-    image: AssetImage("image/sport.jpg"),
+    image: AssetImage("assets/image/sport.jpg"),
     name: "Sport",
   ),
 ];

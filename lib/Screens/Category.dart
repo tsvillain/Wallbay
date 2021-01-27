@@ -94,7 +94,7 @@ class _CategoryState extends State<Category> {
                         child: FadeInImage.assetNetwork(
                           image: state.getCategoryWallpaper[index].portrait,
                           fit: BoxFit.cover,
-                          placeholder: "image/abstract.jpg",
+                          placeholder: "assets/image/abstract.jpg",
                           imageScale: 1,
                         ),
                       ),

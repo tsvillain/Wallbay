@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:getwidget/components/button/gf_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wallbay/Model/wallpaper.dart';
-import 'package:wallpaperplugin/wallpaperplugin.dart';
 import 'package:flutter/services.dart';
 import 'package:easy_permission_validator/easy_permission_validator.dart';
+import 'package:wallpaper_manager/wallpaper_manager.dart';
 
 class Detail extends StatefulWidget {
   final Wallpaper wallpaper;
@@ -63,9 +65,33 @@ class _DetailState extends State<Detail> {
         Padding(
           padding: const EdgeInsets.all(20.0),
           child: Align(
-              alignment: Alignment.bottomRight,
-              child: downloadImage
-                  ? Container(
+            alignment: Alignment.bottomRight,
+            child: downloadImage
+                ? Container(
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white60,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                        "Downloading.. $downPer",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  )
+                : InkWell(
+                    onTap: () {
+                      if (permission == false) {
+                        print("Requesting Permission");
+                        _permissionRequest();
+                      } else {
+                        print("Permission Granted.");
+                        setWallpaper();
+                      }
+                    },
+                    child: Container(
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: Colors.white60,
@@ -74,57 +100,13 @@ class _DetailState extends State<Detail> {
                       child: Padding(
                         padding: const EdgeInsets.all(18.0),
                         child: Text(
-                          "Downloading.. $downPer",
+                          "Set Wallpaper",
                           style: TextStyle(color: Colors.black),
                         ),
                       ),
-                    )
-                  // GFButton(
-                  //     onPressed: () {},
-                  //     text: "Downloading... $downPer",
-                  //     shape: GFButtonShape.pills,
-                  //     color: Colors.white54,
-                  //   )
-                  : InkWell(
-                      onTap: () {
-                        if (permission == false) {
-                          print("Requesting Permission");
-                          _permissionRequest();
-                        } else {
-                          print("Permission Granted.");
-                          setWallpaper();
-                        }
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white60,
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(18.0),
-                          child: Text(
-                            "Set Wallpaper",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    )
-              // GFButton(
-              //     onPressed: () {
-              //       if (permission == false) {
-              //         print("Requesting Permission");
-              //         _permissionRequest();
-              //       } else {
-              //         print("Permission Granted.");
-              //         setWallpaper();
-              //       }
-              //     },
-              //     text: "Set Wallpaper",
-              //     shape: GFButtonShape.pills,
-              //     color: Colors.white54,
-              //   ),
-              ),
+                    ),
+                  ),
+          ),
         ),
       ]),
     );
@@ -153,19 +135,55 @@ class _DetailState extends State<Detail> {
       setState(() {
         downloadImage = false;
       });
-      initPlatformState("${dir.path}/wallbay.png");
+      showModalBottomSheet(
+          isDismissible: false,
+          context: context,
+          builder: (_) {
+            return Container(
+              margin: EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  GFButton(
+                    onPressed: () {
+                      initPlatformState("${dir.path}/wallbay.png",
+                          WallpaperManager.HOME_SCREEN);
+                      Navigator.pop(context);
+                    },
+                    text: "HomeScreen",
+                  ),
+                  GFButton(
+                    onPressed: () {
+                      initPlatformState("${dir.path}/wallbay.png",
+                          WallpaperManager.LOCK_SCREEN);
+                      Navigator.pop(context);
+                    },
+                    text: "LockScreen",
+                  ),
+                  GFButton(
+                    onPressed: () {
+                      initPlatformState("${dir.path}/wallbay.png",
+                          WallpaperManager.BOTH_SCREENS);
+                      Navigator.pop(context);
+                    },
+                    text: "Both",
+                  ),
+                ],
+              ),
+            );
+          });
     });
   }
 
-  Future<void> initPlatformState(String path) async {
-    String wallpaperStatus = "Unexpected Result";
-    String _localFile = path;
+  Future<void> initPlatformState(String path, int location) async {
     try {
-      Wallpaperplugin.setWallpaperWithCrop(localFile: _localFile);
-      wallpaperStatus = "Wallpaper set";
+      await WallpaperManager.setWallpaperFromFile(path, location);
+      Fluttertoast.showToast(
+          msg: 'Wallpaper Applied.', toastLength: Toast.LENGTH_SHORT);
     } on PlatformException {
+      Fluttertoast.showToast(
+          msg: 'Please Try Again Later.', toastLength: Toast.LENGTH_SHORT);
       print("Platform exception");
-      wallpaperStatus = "Platform Error Occured";
     }
     if (!mounted) return;
   }

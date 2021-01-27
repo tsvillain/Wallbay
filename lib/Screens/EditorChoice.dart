@@ -79,7 +79,7 @@ class _EditorChoiceState extends State<EditorChoice>
                       child: FadeInImage.assetNetwork(
                         image: state.getWallpaper[index].portrait,
                         fit: BoxFit.cover,
-                        placeholder: "image/abstract.jpg",
+                        placeholder: "assets/image/abstract.jpg",
                         imageScale: 1,
                       ),
                     ),
