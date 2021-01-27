@@ -10,13 +10,15 @@ Wallpaper App developed in Flutter using [Pexels API](https://www.pexels.com/api
   * path_provider: ^1.4.0
   * dio: ^3.0.3
   * share: ^0.6.3+1
-  * wallpaperplugin: ^0.1.1
+  * wallpaper_manager: ^1.0.10
   * easy_permission_validator: ^1.0.6
   * flutter_bloc: ^4.0.0
   * equatable: ^1.1.1
   * google_nav_bar: ^2.2.0
   * url_launcher: ^5.4.10
   * package_info: ^0.4.1
+  * getwidget: ^1.2.4
+  * fluttertoast: ^7.1.6
   
 ## Show some love ⭐ Star this Repo.
 [![GitHub stars](https://img.shields.io/github/stars/tsvillain/Wallbay.svg?style=social&label=Star)](https://github.com/tsvillain/Wallbay) [![GitHub forks](https://img.shields.io/github/forks/tsvillain/Wallbay.svg?style=social&label=Fork)](https://github.com/tsvillain/Wallbay/fork)
