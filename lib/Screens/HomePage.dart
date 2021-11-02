@@ -119,8 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     }),
               ),
             ),
+            Spacer(),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: EdgeInsets.only(right: 20, top: 20, bottom: 20),
               child: FloatingActionButton(
                 backgroundColor: Colors.white,
                 child: Icon(
