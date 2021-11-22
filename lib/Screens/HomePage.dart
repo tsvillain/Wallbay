@@ -63,12 +63,18 @@ class _MyHomePageState extends State<MyHomePage> {
         elevation: 0.0,
         title: Text(
           widget.title,
-          style: TextStyle(fontFamily: 'Raleway'),
+          style: TextStyle(
+            fontFamily: 'Raleway',
+            color: Colors.black,
+          ),
         ),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.info_outline),
+            icon: Icon(
+              Icons.info_outline,
+              color: Colors.black,
+            ),
             onPressed: () {
               Navigator.push(
                   context, CupertinoPageRoute(builder: (context) => Setting()));
