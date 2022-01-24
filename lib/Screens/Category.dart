@@ -52,10 +52,14 @@ class _CategoryState extends State<Category> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Colors.black),
         elevation: 0.0,
         title: Text(
           widget.category,
-          style: TextStyle(fontFamily: 'Raleway'),
+          style: TextStyle(
+            fontFamily: 'Raleway',
+            color: Colors.black,
+          ),
         ),
         centerTitle: true,
       ),
