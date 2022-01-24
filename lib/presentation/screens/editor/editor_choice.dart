@@ -1,8 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wallbay/Bloc/wallpaperBloc.dart';
-import 'package:wallbay/Bloc/wallpaperState.dart';
 import 'package:wallbay/Model/wallpaper.dart';
 import 'package:wallbay/Screens/Detail.dart';
 

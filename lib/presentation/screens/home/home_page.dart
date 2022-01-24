@@ -1,61 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:wallbay/Bloc/wallpaperBloc.dart';
-import 'package:wallbay/Bloc/wallpaperEvent.dart';
-import 'package:wallbay/Screens/CategoryList.dart' as categoryScreen;
-import 'package:wallbay/Screens/EditorChoice.dart';
 import 'package:wallbay/Screens/Search.dart';
 import 'package:wallbay/Screens/Setting.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wallbay/presentation/screens/category/category_list.dart';
+import 'package:wallbay/presentation/screens/home/home_view_model.dart';
+import '../editor/editor_choice.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends ConsumerStatefulWidget {
   final String title;
-  MyHomePage(this.title);
+  const MyHomePage(this.title);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  WallpaperBloc _wallpaperBloc;
-  int _selectedIndex = 0;
-  PageController controller = PageController();
-  List<GButton> tabs = new List();
+class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    var padding = EdgeInsets.symmetric(horizontal: 18, vertical: 5);
-    double gap = 10;
-
-    tabs.add(GButton(
-      gap: gap,
-      iconActiveColor: Colors.purple,
-      iconColor: Colors.black,
-      textColor: Colors.purple,
-      backgroundColor: Colors.purple.withOpacity(.2),
-      iconSize: 24,
-      padding: padding,
-      icon: Icons.verified_user,
-      text: "Editor's Choice",
-    ));
-
-    tabs.add(GButton(
-      gap: gap,
-      iconActiveColor: Colors.teal,
-      iconColor: Colors.black,
-      textColor: Colors.teal,
-      backgroundColor: Colors.teal.withOpacity(.2),
-      iconSize: 24,
-      padding: padding,
-      icon: Icons.category,
-      text: 'Category',
-    ));
+    ref.read(homeViewProvider).init();
   }
 
   @override
   Widget build(BuildContext context) {
-    _wallpaperBloc = BlocProvider.of<WallpaperBloc>(context);
-    _wallpaperBloc.add(GetAllWallpaper());
+    final viewModel = ref.watch(homeViewProvider);
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
@@ -83,16 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       body: PageView.builder(
-        onPageChanged: (page) {
-          setState(() {
-            _selectedIndex = page;
-          });
-        },
-        controller: controller,
+        onPageChanged: viewModel.updateIndex,
+        controller: viewModel.controller,
         itemBuilder: (BuildContext context, int index) {
           return getScreen(index);
         },
-        itemCount: tabs.length,
+        itemCount: viewModel.tabs.length,
       ),
       bottomNavigationBar: SafeArea(
         child: Row(
@@ -115,13 +80,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
                 child: GNav(
-                    tabs: tabs,
-                    selectedIndex: _selectedIndex,
+                    tabs: viewModel.tabs,
+                    selectedIndex: viewModel.selectedIndex,
                     onTabChange: (index) {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
-                      controller.jumpToPage(index);
+                      viewModel.updateIndex(index);
+                      viewModel.controller.jumpToPage(index);
                     }),
               ),
             ),
@@ -152,6 +115,6 @@ getScreen(int selectedIndex) {
   if (selectedIndex == 0) {
     return EditorChoice();
   } else if (selectedIndex == 1) {
-    return categoryScreen.CategoryList();
+    return CategoryList();
   }
 }

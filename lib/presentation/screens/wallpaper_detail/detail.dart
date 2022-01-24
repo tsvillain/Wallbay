@@ -6,8 +6,8 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:wallbay/Model/wallpaper.dart';
 import 'package:flutter/services.dart';
-import 'package:easy_permission_validator/easy_permission_validator.dart';
-import 'package:wallpaper_manager/wallpaper_manager.dart';
+// import 'package:easy_permission_validator/easy_permission_validator.dart';
+// import 'package:wallpaper_manager/wallpaper_manager.dart';
 
 class Detail extends StatefulWidget {
   final Wallpaper wallpaper;
